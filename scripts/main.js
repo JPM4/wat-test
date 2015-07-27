@@ -164,3 +164,27 @@ function getRand(num) {
 }
 
 getPeople();
+
+var isPushEnabled = false;
+
+window.addEventListener('load', function() {
+  var pushButton = document.querySelector('#js-push-button');
+  pushButton.addEventListener('click', function() {
+    if (isPushEnabled) {
+      unsubscribe();
+    } else {
+      subscribe();
+    }
+  });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+    .then(initializeState);
+  } else {
+    alert('Service workers aren\'t supported in this browser.');
+  }
+});
+
+window.initializeState = function() {
+  console.log("hello");
+};
